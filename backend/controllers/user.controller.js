@@ -51,20 +51,20 @@ export const login = async (req, res) => {
       return res
         .status(400)
         .json({ message: 'Incorrect password', success: false });
-      }
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '1d',
-      });
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
 
-      const populatedPost = await Promise.all(
-        user.posts.map(async (postId) => {
-          const post = await Post.findById(postId);
-          if (post.author.equals(user._id)) {
-            return post;
-          }
-          return null;
-        })
-      );
+    const populatedPost = await Promise.all(
+      user.posts.map(async (postId) => {
+        const post = await Post.findById(postId);
+        if (post.author.equals(user._id)) {
+          return post;
+        }
+        return null;
+      })
+    );
     user = {
       _id: user._id,
       username: user.username,
@@ -75,13 +75,20 @@ export const login = async (req, res) => {
       followers: user.followers,
       following: user.following,
     };
-   
+
+    // return res
+    //   .cookie('token', token, {
+    //     httpOnly: true,
+    //     sameSite: 'None', // instead of 'strict'
+    //     secure: true, // Set to true if using HTTPS
+    //     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+    //   })
     return res
       .cookie('token', token, {
         httpOnly: true,
-        sameSite: 'None', // instead of 'strict'
-        secure: true, // Set to true if using HTTPS
-        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000,
       })
       .status(200)
       .json({
@@ -89,7 +96,6 @@ export const login = async (req, res) => {
         success: true,
         user,
       });
-
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Something went wrong' });
@@ -110,7 +116,9 @@ export const logOut = async (req, res) => {
 
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate({path: 'posts', createdAt: -1}).populate('bookmarks')
+    const user = await User.findById(req.params.id)
+      .populate({ path: 'posts', createdAt: -1 })
+      .populate('bookmarks');
     return res
       .status(200)
       .json({ message: 'User found successfully', success: true, user });
@@ -128,9 +136,9 @@ export const editProfile = async (req, res) => {
     let cloudResponse;
     if (proFilePicture) {
       const fileUri = getDataUri(proFilePicture);
-    cloudResponse = await cloudinary.uploader.upload(fileUri)
+      cloudResponse = await cloudinary.uploader.upload(fileUri);
     }
-    const user = await User.findById(userId,).select('-password');
+    const user = await User.findById(userId).select('-password');
     if (!user) {
       return res
         .status(400)
@@ -155,8 +163,6 @@ export const editProfile = async (req, res) => {
   }
 };
 
-
-
 export const getSuggestedUser = async (req, res) => {
   try {
     const users = await User.find({ _id: { $ne: req.id } }).select('-password');
@@ -165,57 +171,67 @@ export const getSuggestedUser = async (req, res) => {
         .status(400)
         .json({ message: 'Users not found', success: false });
     }
-      return res.status(200).json({
-        message: 'Users found successfully',
-        success: true,
-        users,
-      });
+    return res.status(200).json({
+      message: 'Users found successfully',
+      success: true,
+      users,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
-
 export const followOrUnfollow = async (req, res) => {
-    try {
-        const followKrneWala = req.id;
-        const jiskoFollowKrunga = req.params.id;
-        if (followKrneWala === jiskoFollowKrunga) {
-            return res
-            .status(400)
-            .json({ message: 'You cannot follow yourself', success: false });
-        }
+  try {
+    const followKrneWala = req.id;
+    const jiskoFollowKrunga = req.params.id;
+    if (followKrneWala === jiskoFollowKrunga) {
+      return res
+        .status(400)
+        .json({ message: 'You cannot follow yourself', success: false });
+    }
     const user = await User.findById(followKrneWala);
     const targetUser = await User.findById(jiskoFollowKrunga);
-    if(!user || !targetUser){
-        return res
+    if (!user || !targetUser) {
+      return res
         .status(400)
         .json({ message: 'User not found', success: false });
     }
 
     const isFollowWing = user.following.includes(jiskoFollowKrunga);
 
-    if(isFollowWing){
-       await Promise.all([
-           User.updateOne({ _id: followKrneWala }, { $pull: { following: jiskoFollowKrunga } }),
-           User.updateOne({ _id: jiskoFollowKrunga }, { $pull: { followers: followKrneWala } }),
-       ])
-       return res
-       .status(200)
-       .json({ message: 'User unfollowed successfully', success: true });
-    }else{
-        await Promise.all([
-            User.updateOne({ _id: followKrneWala }, { $push: { following: jiskoFollowKrunga } }),
-            User.updateOne({ _id: jiskoFollowKrunga }, { $push: { followers: followKrneWala } }),
-        ])
-         return res
-           .status(200)
-           .json({ message: 'User followed successfully', success: true });
+    if (isFollowWing) {
+      await Promise.all([
+        User.updateOne(
+          { _id: followKrneWala },
+          { $pull: { following: jiskoFollowKrunga } }
+        ),
+        User.updateOne(
+          { _id: jiskoFollowKrunga },
+          { $pull: { followers: followKrneWala } }
+        ),
+      ]);
+      return res
+        .status(200)
+        .json({ message: 'User unfollowed successfully', success: true });
+    } else {
+      await Promise.all([
+        User.updateOne(
+          { _id: followKrneWala },
+          { $push: { following: jiskoFollowKrunga } }
+        ),
+        User.updateOne(
+          { _id: jiskoFollowKrunga },
+          { $push: { followers: followKrneWala } }
+        ),
+      ]);
+      return res
+        .status(200)
+        .json({ message: 'User followed successfully', success: true });
     }
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: 'Something went wrong' });
-    }
-   
-}
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Something went wrong' });
+  }
+};

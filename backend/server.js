@@ -18,10 +18,14 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173', // for local development
+    'https://insta-clone-dmvc.vercel.app', // your deployed frontend
+  ],
   credentials: true,
-}
+};
 app.use(cors(corsOptions));
+
 
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/post', postRoute);
