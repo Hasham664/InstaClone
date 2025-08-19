@@ -1,0 +1,45 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { useSelector } from 'react-redux'
+import SuggestedUser from './SuggestedUser'
+
+const RightSidebar = () => {
+  const {user} = useSelector(state => state.auth)
+  console.log(user, 'user in right sidebar');
+  console.log(user?.profilePicture, 'user profile picture in right sidebar');
+  console.log(user?.profilePhoto, 'user profile photo in right sidebar');
+  
+  
+  
+  return (
+    <div className='pr-32 my-10 w-fit '>
+      <div className='flex items-center gap-2'>
+        <Link to={`/profile/${user?._id}`}>
+          <Avatar>
+            <AvatarImage 
+            className='object-cover w-full h-full rounded-full'
+              src={user?.profilePicture || user?.profilePhoto || 'https://github.com/shadcn.png'}
+            />
+            <AvatarFallback>cn</AvatarFallback>
+          </Avatar>
+        </Link>
+        <div>
+          <h1 className='text-sm font bold'>
+            <Link to={`/profile/${user?._id}`}>{user?.username}</Link>
+          </h1>
+          <span className='text-sm text-gray-600'>
+            {user?.bio
+              ? user.bio.length > 6
+                ? `${user.bio.slice(0, 15)}...`
+                : user.bio
+              : 'No bio found'}
+          </span>
+        </div>
+      </div>
+      <SuggestedUser />
+    </div>
+  );
+}
+
+export default RightSidebar
