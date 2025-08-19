@@ -30,7 +30,7 @@ app.use('/api/v1/message', messageRoute);
 app.get('/', (req, res) => {
   res.send('Insta Api is running');
 });
-server.listen(port, () => {
+server.listen(PORT, () => {
   connectDB();
   console.log(`Server is running on port ${PORT}`);
 });
