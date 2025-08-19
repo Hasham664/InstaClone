@@ -9,7 +9,10 @@ import userRoute from './routes/user.route.js';
 import postRoute from './routes/post.route.js';
 import messageRoute from './routes/message.route.js';
 import { server,app } from './socket/socket.js'; // Import the socket server
-const port = process.env.Port || 4000;
+
+const PORT = process.env.PORT || 4000;
+
+app.set('trust proxy', 1);
 
 app.use(cookieParser());
 app.use(express.json());
@@ -29,5 +32,5 @@ app.get('/', (req, res) => {
 });
 server.listen(port, () => {
   connectDB();
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${PORT}`);
 });
