@@ -133,7 +133,7 @@ const [isBookmarked, setIsBookmarked] = useState(post?.isBookmarked || false);
         withCredentials: true,
       });
       if (res.data.success) {
-        setIsBookmarked(res.data.isBookmarked); // take value from backend
+        setIsBookmarked(res?.data?.isBookmarked); // take value from backend
         toast.success(res.data.message);
       }
     } catch (err) {
@@ -151,7 +151,7 @@ const [isBookmarked, setIsBookmarked] = useState(post?.isBookmarked || false);
   return (
     <div className='w-full max-w-sm mx-auto my-8'>
       <div className='flex items-center justify-between '>
-        <Link to={`/profile/${post.author?._id}`}>
+        <Link to={`/profile/${post?.author?._id}`}>
           <div className='flex items-center gap-2'>
             <Avatar>
               <AvatarImage
@@ -201,7 +201,7 @@ const [isBookmarked, setIsBookmarked] = useState(post?.isBookmarked || false);
       <div className='h-[550px]'>
         <img
           className='object-cover w-full h-full my-4 rounded-sm '
-          src={post.image}
+          src={post?.image}
           alt='post image'
         />
       </div>

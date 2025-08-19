@@ -128,7 +128,7 @@ const Profile = () => {
             <span className={`py-3 cursor-pointer`}>TAGS</span>
           </div>
           <div className='grid grid-cols-3 gap-2'>
-            {displayedPosts.map((post) => (
+            {displayedPosts?.map((post) => (
               <div key={post._id} className='relative cursor-pointer group '>
                 <img
                   src={post.image}

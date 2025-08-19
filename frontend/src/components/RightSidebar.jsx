@@ -6,10 +6,6 @@ import SuggestedUser from './SuggestedUser'
 
 const RightSidebar = () => {
   const {user} = useSelector(state => state.auth)
-  console.log(user, 'user in right sidebar');
-  console.log(user?.profilePicture, 'user profile picture in right sidebar');
-  console.log(user?.profilePhoto, 'user profile photo in right sidebar');
-  
   
   
   return (
