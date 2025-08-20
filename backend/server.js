@@ -30,6 +30,18 @@ app.use(cors(corsOptions));
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/post', postRoute);
 app.use('/api/v1/message', messageRoute);
+app.get('/api/v1/debug', (req, res) => {
+  
+console.log('request headers:', req.headers.origin);
+console.log('request headers:', req.headers);
+console.log('request cookies:', req.cookies);
+  res.json({
+    cookies: req.cookies,
+    headers: req.headers.origin,
+    
+  });
+});
+
 
 app.get('/', (req, res) => {
   res.send('Insta Api is running');

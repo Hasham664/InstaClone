@@ -18,7 +18,6 @@ console.log('userSocketMap now:', userSocketMap);
 // export const GetReciverSocketId = (reciverId) => userSocketMap[reciverId] || null;
 export const getReceiverSocketId = (receiverId) => userSocketMap[receiverId] || null;
 
-console.log('userSocketMap userSocketMap:', userSocketMap);
 
 io.on('connection', (socket) => {
  const userId = socket.handshake.query.userId;

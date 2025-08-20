@@ -73,6 +73,19 @@ const LeftSideBar = () => {
     }
   };
 
+  const apiDebug =  async () => {
+    try {
+      const res = await axios.get(`${BACKENDURL}/debug`, {
+        withCredentials: true,
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+    // apiDebug(); // Uncomment to test API debug endpoint
+    apiDebug(); // Call API debug endpoint
+
   const sidebarHandler = (text) => {
     if (text === 'Logout') {
       logOutHandler();

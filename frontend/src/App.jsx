@@ -72,8 +72,7 @@ useEffect(() => {
     });
 
     // Fetch unread notifications from DB
-    axios
-      .get(`${BACKENDURL}/post/notifications`, {
+    axios.get(`${BACKENDURL}/post/notifications`, {
         withCredentials: true,
       })
       .then((res) => {
