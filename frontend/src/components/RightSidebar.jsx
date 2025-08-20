@@ -6,16 +6,21 @@ import SuggestedUser from './SuggestedUser'
 
 const RightSidebar = () => {
   const {user} = useSelector(state => state.auth)
+  console.log(user, 'user in right sidebar');
   
   
   return (
-    <div className='pr-32 my-10 w-fit '>
+    <div className='py-10 text-white bg-black lg:pr-32 md:pr-16 max-md:pr-8 max-sm:hidden w-fit '>
       <div className='flex items-center gap-2'>
         <Link to={`/profile/${user?._id}`}>
           <Avatar>
-            <AvatarImage 
-            className='object-cover w-full h-full rounded-full'
-              src={user?.profilePicture || user?.profilePhoto || 'https://github.com/shadcn.png'}
+            <AvatarImage
+              className='object-cover w-full h-full rounded-full'
+              src={
+                user?.profilePicture ||
+                user?.profilePhoto ||
+                'https://github.com/shadcn.png'
+              }
             />
             <AvatarFallback>cn</AvatarFallback>
           </Avatar>

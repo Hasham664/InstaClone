@@ -69,8 +69,8 @@ useEffect(() => {
         onInteractOutside={() => setOpen(false)}
         className='flex flex-col max-w-5xl p-0 '
       >
-        <div className='flex max-sm:flex-wrap'>
-          <div className='sm:w-1/2 h-[550px]'>
+        <div className='flex '>
+          <div className='  sm:w-1/2 h-[350px] md:h-[550px]'>
             <img
               className='object-cover w-full h-full rounded-lg'
               src={selectedPost?.image}

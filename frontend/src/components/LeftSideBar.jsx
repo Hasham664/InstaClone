@@ -1,6 +1,7 @@
 import {
   Heart,
   Home,
+  Instagram,
   LogOut,
   MessageCircle,
   PlusSquare,
@@ -18,21 +19,26 @@ import CreatePost from './CreatePost';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Button } from './ui/button';
 import { setLikeNotification } from '@/redux/rtnSlice';
+import { FaInstagram } from 'react-icons/fa';
 
 const LeftSideBar = () => {
   const BACKENDURL = import.meta.env.VITE_BACKEND_URL;
   const { user } = useSelector((store) => store.auth);
-  const { likeNotification } = useSelector((store) => store.realTimeNotification);
+  const { likeNotification } = useSelector(
+    (store) => store.realTimeNotification
+  );
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
- 
-  console.log(likeNotification,'likeNotification');
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  console.log(likeNotification, 'likeNotification');
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-    const [allNotifications, setAllNotifications] = useState([]);
+  const [allNotifications, setAllNotifications] = useState([]);
 
   const navigate = useNavigate();
-  
-   const myNotifications = likeNotification.filter(
+
+  const myNotifications = likeNotification.filter(
     (n) => n.userId === user?._id // show ONLY receiver's notifications
   );
   const unreadCount = myNotifications.filter((n) => !n.isRead).length;
@@ -67,7 +73,6 @@ const LeftSideBar = () => {
     }
   };
 
- 
   const sidebarHandler = (text) => {
     if (text === 'Logout') {
       logOutHandler();
@@ -79,7 +84,7 @@ const LeftSideBar = () => {
       navigate('/');
     } else if (text === 'Messages') {
       navigate('/chat');
-    } 
+    }
   };
   const sidebarItems = [
     {
@@ -99,7 +104,7 @@ const LeftSideBar = () => {
       text: 'Messages',
     },
     {
-      icon: <Heart size={25}/>,
+      icon: <Heart/>,
       text: 'Notifications',
     },
     {
@@ -128,16 +133,38 @@ const LeftSideBar = () => {
     },
   ];
   return (
-    <div  className=' overflow-y-auto fixed top-0 left-0 px-4 h-screen w-[16%] border-r border-gray-300 bg-white'>
-      <h1 className='px-2 pt-4 pb-5 text-2xl font-bold'>Logo</h1>
+    <div
+      className={`
+      overflow-y-auto max-md:flex max-md:items-center max-md:justify-between max-md:w-full max-md:bottom-0 md:block fixed md:top-0 left-0 max-sm:px-2 px-4  md:h-screen border-r border-gray-300 bg-black text-white z-50  
+       ${isCollapsed ? 'max-lg:w-fit  ' : 'lg:w-[16%]'}
+    `}
+    >
+      <Link to='/' className='max-sm:hidden'>
+        <h1
+          className={`
+        cursor-pointer md:pt-10 md:pb-6 flex items-center gap-2 text-lg font-bold
+           
+      `}
+        >
+          <FaInstagram className='w-8 h-8 ' />
+          <p className={` hidden  ${isCollapsed ? 'lg:hidden' : 'lg:block'}   `}>
+            INSTA
+          </p>
+        </h1>
+      </Link>
+
       {sidebarItems.map((item, ind) => {
         const isNotifications = item.text === 'Notifications';
 
         return (
-          // Inside map:
           <div
             key={ind}
-            className='relative flex items-center gap-2 p-1 py-4 rounded-md cursor-pointer hover:bg-gray-200'
+            className={`relative flex items-center gap-2 py-2 sm:p-1 sm:py-4 rounded-md cursor-pointer hover:bg-white hover:text-black 
+        ${
+          item.text === 'Search' || item.text === 'Explore'
+            ? 'max-md:hidden'
+            : ''
+        }`}
             onClick={async () => {
               if (isNotifications) {
                 await fetchAllNotifications();
@@ -145,10 +172,19 @@ const LeftSideBar = () => {
               } else {
                 sidebarHandler(item.text);
               }
+              //  if (isMessages) setIsCollapsed(true); // collapse on Messages
             }}
           >
+            <p className='text-xs'>
+              
             {item.icon}
-            <span className=''>{item.text}</span>
+            </p>
+            {/* Base: hidden on mobile. On lg: show unless collapsed */}
+            <span
+              className={`hidden ${isCollapsed ? 'lg:hidden' : 'lg:inline'}`}
+            >
+              {item.text}
+            </span>
 
             {user && isNotifications && (
               <Popover
@@ -170,7 +206,7 @@ const LeftSideBar = () => {
               >
                 {/* No separate badge click needed — just display the badge */}
                 <PopoverTrigger asChild>
-                  <div className='absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full bottom-7 left-4'>
+                  <div className='absolute flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full sm:h-5 sm:w-5 bottom-5 sm:bottom-7 left-4'>
                     {unreadCount}
                   </div>
                 </PopoverTrigger>
@@ -190,8 +226,7 @@ const LeftSideBar = () => {
                           key={notification._id}
                           className='flex items-center gap-2 p-2 rounded-md hover:bg-gray-100'
                         >
-                          <Link to={`/profile/${notification.fromUser?._id}`} >
-                          
+                          <Link to={`/profile/${notification.fromUser?._id}`}>
                             <Avatar className='w-8 h-8'>
                               <AvatarImage
                                 className='object-cover w-full h-full rounded-full'

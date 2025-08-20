@@ -13,7 +13,7 @@ const Messages = ({ selectedUser }) => {
   const {messages} = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.auth);
   return (
-    <div className='flex-1 p-4 overflow-y-auto'>
+    <div className='flex-1 p-4 overflow-y-auto '>
       <div className='flex justify-center'>
         <div className='flex flex-col items-center justify-center'>
           <Avatar className='w-20 h-20 mb-4'>
@@ -38,7 +38,7 @@ const Messages = ({ selectedUser }) => {
       <div className='flex flex-col gap-3'>
         { messages && messages?.map((msg, index) => {
           return (
-            <div key={index} className={`p-2  rounded-lg ${msg.senderId === user._id ? 'self-end bg-blue-100 ' : 'self-start bg-gray-200'}`}>
+            <div key={index} className={`p-2  rounded-lg ${msg.senderId === user._id ? 'self-end bg-white text-black font-semibold ' : 'self-start bg-white text-black font-semibold'}`}>
               <p className='text-sm'> {msg?.messages}</p>
             </div>
           );

@@ -20,59 +20,79 @@ const Profile = () => {
   }
   const displayedPosts = activeTab === 'posts' ? userProfile?.posts : userProfile?.bookmarks || [];
   return (
-    <div className='flex justify-center max-w-5xl pl-10 mx-auto'>
-      <div className='flex flex-col gap-20 p-8'>
-        <div className='grid grid-cols-2'>
-          <section className='flex items-center justify-center'>
-            <Avatar className='w-32 h-32 '>
+    <div className=' bg-black text-white lg:pl-[15%] max-lg:pl-[7%] max-md:pl-[0%]'>
+      <div className='flex flex-col max-md:p-4 md:p-8 max-md:gap-10 md:gap-20'>
+        <div className='flex gap-6 md:gap-12 md:items-center md:justify-center max-md:items-start max-md:flex-col'>
+          <section className='flex items-start justify-center gap-4'>
+            <Avatar className='w-24 h-24 md:h-32 md:w-32'>
               <AvatarImage
-              className='object-cover w-full h-full rounded-full'
+                className='object-cover w-full h-full rounded-full'
                 src={
                   userProfile?.profilePicture || 'https://github.com/shadcn.png'
                 }
               />
             </Avatar>
+            <div className='hidden max-md:block'>
+              <p className=''> {userProfile?.username}</p>
+              <div className='flex items-center gap-4 mt-1'>
+                <p className=''>
+                  <span className='font-semibold'>
+                    {userProfile?.posts?.length} <br /> posts
+                  </span>
+                </p>
+
+                <p>
+                  <span className='font-semibold'>
+                    {userProfile?.followers?.length} <br /> followers
+                  </span>
+                </p>
+                <p>
+                  <span className='font-semibold'>
+                    {userProfile?.following?.length} <br /> following
+                  </span>
+                </p>
+              </div>
+            </div>
           </section>
           <section>
-            <div className='flex flex-col gap-5'>
-              <div className='flex items-center gap-3'>
-                <p>{userProfile?.username}</p>
-                {
-                  isLoggedInUserProfile ? (
-                    <>
-                <Link to='/account/edit'>
-                  <Button
-                    variant='secondary'
-                    className='h-8 hover:bg-gray-200 '
-                    >
-                    Edit Profile
-                  </Button>
+            <div className='flex max-md:gap-10 md:gap-5 max-md:flex-col-reverse md:flex-col'>
+              <div className='flex flex-wrap items-center gap-3 '>
+                <p className='max-md:hidden'>{userProfile?.username}</p>
+                {isLoggedInUserProfile ? (
+                  <>
+                    <Link to='/account/edit'>
+                      <Button
+                        variant='secondary'
+                        className='h-8 hover:bg-gray-200 '
+                      >
+                        Edit Profile
+                      </Button>
                     </Link>
-                  <Button
-                    variant='secondary'
-                    className='h-8 hover:bg-gray-200 '
-                  >
-                    View archive
-                  </Button>
-                  <Button
-                    variant='secondary'
-                    className='h-8 hover:bg-gray-200 '
-                  >
-                    Ad tools
-                  </Button>
-                </>
-                  ) : (
+                    <Link to='/account/edit'>
+                      <Button
+                        variant='secondary'
+                        className='h-8 hover:bg-gray-200 '
+                      >
+                        View Activity
+                      </Button>
+                    </Link>
                     <Button
                       variant='secondary'
-                      className='h-8 text-white bg-blue-600 hover:bg-blue-500'
+                      className='h-8 hover:bg-gray-200 '
                     >
-                      Follow
+                      Ad tools
                     </Button>
-                  )
-                }
-                
+                  </>
+                ) : (
+                  <Button
+                    variant='secondary'
+                    className='h-8 text-white bg-blue-600 hover:bg-blue-500'
+                  >
+                    Follow
+                  </Button>
+                )}
               </div>
-              <div className='flex items-center gap-4'>
+              <div className='flex items-center gap-4 max-md:hidden'>
                 <p>
                   <span className='font-semibold'>
                     {userProfile?.posts?.length} posts
@@ -91,16 +111,16 @@ const Profile = () => {
                 </p>
               </div>
               <div className='flex flex-col gap-1 '>
-                <h1 className='font-seemibold'>
+                <p className='max-w-md m-inherit font-seemibold '>
                   {userProfile?.bio || 'bio here.....'}
-                </h1>
-                <Badge className='px-2 py-1 w-fit' variant='outline'>
+                </p>
+                <Badge className='px-2 py-1 w-fit' variant='secondary'>
                   {' '}
                   <AtSign size={16} />{' '}
                   <span className='pl-1'>{userProfile?.username}</span>
                 </Badge>
-                <span>Learn code with Hasham</span>
-                <span>Coding is love and love is coding</span>
+                {/* <span>Learn code with Hasham</span>
+                <span>Coding is love and love is coding</span> */}
               </div>
             </div>
           </section>
@@ -110,7 +130,7 @@ const Profile = () => {
             <span
               onClick={() => handleTabClick('posts')}
               className={`py-3 cursor-pointer ${
-                activeTab === 'posts' ? 'font-bold text-black' : ''
+                activeTab === 'posts' ? 'font-bold text-red-600 underline' : ''
               } `}
             >
               POSTS
@@ -119,7 +139,7 @@ const Profile = () => {
             <span
               onClick={() => handleTabClick('saved')}
               className={`py-3 cursor-pointer ${
-                activeTab === 'saved' ? 'font-bold text-black' : ''
+                activeTab === 'saved' ? 'font-bold text-red-600 underline' : ''
               } `}
             >
               SAVED
@@ -127,13 +147,13 @@ const Profile = () => {
             <span className={`py-3 cursor-pointer`}>REELS</span>
             <span className={`py-3 cursor-pointer`}>TAGS</span>
           </div>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid gap-2 mb-10 max-sm:grid-cols-2 sm:grid-cols-3'>
             {displayedPosts?.map((post) => (
-              <div key={post._id} className='relative cursor-pointer group '>
+              <div key={post._id} className='relative bg-black cursor-pointer  group'>
                 <img
                   src={post.image}
                   alt={post.image}
-                  className='object-cover w-full my-2 rounded-sm h-[450px] '
+                  className='object-cover w-full my-2 rounded-sm max-sm:h-[200px] max-md:h-[350px] md:h-[450px] '
                 />
                 <div className='absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out rounded-lg opacity-0 bg-black/50 group-hover:opacity-100'>
                   <div className='flex items-center space-x-4 text-white'>

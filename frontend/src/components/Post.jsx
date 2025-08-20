@@ -149,7 +149,7 @@ const [isBookmarked, setIsBookmarked] = useState(post?.isBookmarked || false);
       </div>
     )
   return (
-    <div className='w-full max-w-sm mx-auto my-8'>
+    <div className='w-full max-w-sm mx-auto mb-8 text-white bg-black'>
       <div className='flex items-center justify-between '>
         <Link to={`/profile/${post?.author?._id}`}>
           <div className='flex items-center gap-2'>
@@ -198,7 +198,7 @@ const [isBookmarked, setIsBookmarked] = useState(post?.isBookmarked || false);
           </DialogContent>
         </Dialog>
       </div>
-      <div className='h-[550px]'>
+      <div className='md:h-[550px]'>
         <img
           className='object-cover w-full h-full my-4 rounded-sm '
           src={post?.image}

@@ -43,7 +43,7 @@ const ChatPage = () => {
     }
   }, []);
   return (
-    <div className='flex ml-[16%] h-screen'>
+    <div className='flex bg-black text-white md:ml-[16%] h-screen'>
       <section className='w-full my-8 md:w-1/4'>
         <h1 className='px-3 mb-4 text-xl font-bold'>{user?.username}</h1>
         <hr className='mb-4 border-gray-400' />
@@ -57,7 +57,7 @@ const ChatPage = () => {
                   dispatch(setSelectedUser(user));
                 }}
                 key={user._id}
-                className='flex items-center px-3 py-2 cursor-pointer hover:bg-gray-100'
+                className='flex items-center px-3 py-2 cursor-pointer hover:text-black hover:bg-white'
               >
                 <Avatar className='mr-3 rounded-full h-14 w-14'>
                   <AvatarImage
@@ -84,7 +84,7 @@ const ChatPage = () => {
       </section>
       {selectedUser ? (
         <section className='flex flex-col flex-1 h-full p-4 border-l border-gray-300'>
-          <div className='sticky top-0 z-10 flex items-center gap-3 px-3 py-2 bg-white border-b border-gray-300'>
+          <div className='sticky top-0 z-10 flex items-center gap-3 px-3 py-2 bg-black border-b border-gray-300'>
             <Avatar className='mr-3 rounded-full h-14 w-14'>
               <AvatarImage
                 className='object-cover w-full h-full rounded-full'
