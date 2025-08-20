@@ -265,8 +265,8 @@ const [isBookmarked, setIsBookmarked] = useState(post?.isBookmarked || false);
           onChange={changeEventHandler}
           value={text}
           type='text'
-          placeholder='Add a comment'
-          className='w-full text-sm outline-none '
+          placeholder='WRITE A COMMENT'
+          className='w-full text-sm text-white bg-transparent outline-none '
         />
         {text && (
           <span

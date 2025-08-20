@@ -66,7 +66,7 @@ const Login = () => {
   };
 
   return (
-    <div className='flex items-center justify-center w-screen h-screen'>
+    <div className='flex items-center justify-center w-screen h-screen text-white'>
       <form
         onSubmit={handleSubmit}
         className='p-6 space-y-4 border shadow-md rounded-xl'
@@ -108,7 +108,7 @@ const Login = () => {
             <Loader2 className='w-4 h-4 mr-2 animate-spin' />
           </Button>
         ) : (
-          <Button type='submit' className='w-full'>
+          <Button type='submit' className='w-full text-black bg-white '>
            Login
           </Button>
         )}
@@ -116,7 +116,7 @@ const Login = () => {
         <p className='mt-3 text-center'>
           {' '}
           dont have an account?{' '}
-          <Link className='text-blue-600' to='/signup'>
+          <Link className='text-blue-700' to='/signup'>
             Sign up
           </Link>{' '}
         </p>
