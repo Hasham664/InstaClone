@@ -82,7 +82,7 @@ const Login = () => {
             id='email'
             name='email'
             type='email'
-            className='mt-2 focus-visible:ring-transparent'
+            className='mt-2 text-black focus-visible:ring-transparent'
             placeholder='you@example.com'
             value={formData.email}
             onChange={handleChange}
@@ -96,7 +96,7 @@ const Login = () => {
             id='password'
             name='password'
             type='password'
-            className='mt-2 focus-visible:ring-transparent'
+            className='mt-2 text-black focus-visible:ring-transparent'
             placeholder='********'
             value={formData.password}
             onChange={handleChange}
@@ -105,6 +105,7 @@ const Login = () => {
         </div>
         {loading ? (
           <Button type='submit' className='w-full'>
+            Please wait...
             <Loader2 className='w-4 h-4 mr-2 animate-spin' />
           </Button>
         ) : (

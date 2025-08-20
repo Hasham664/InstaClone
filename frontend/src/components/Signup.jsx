@@ -65,7 +65,7 @@ const Signup = () => {
   };
 
   return (
-    <div className='flex items-center justify-center w-screen h-screen'>
+    <div className='flex items-center justify-center w-screen h-screen text-white'>
       <form
         onSubmit={handleSubmit}
         className='p-6 space-y-4 border shadow-md rounded-xl'
@@ -80,7 +80,7 @@ const Signup = () => {
             id='username'
             name='username'
             type='text'
-            className='mt-2 focus-visible:ring-transparent'
+            className='mt-2 text-black focus-visible:ring-transparent'
             placeholder='Your name'
             value={formData.username}
             onChange={handleChange}
@@ -94,7 +94,7 @@ const Signup = () => {
             id='email'
             name='email'
             type='email'
-            className='mt-2 focus-visible:ring-transparent'
+            className='mt-2 text-black focus-visible:ring-transparent'
             placeholder='you@example.com'
             value={formData.email}
             onChange={handleChange}
@@ -108,7 +108,7 @@ const Signup = () => {
             id='password'
             name='password'
             type='password'
-            className='mt-2 focus-visible:ring-transparent'
+            className='mt-2 text-black focus-visible:ring-transparent'
             placeholder='********'
             value={formData.password}
             onChange={handleChange}
@@ -117,10 +117,10 @@ const Signup = () => {
         </div>
         {loading ? (
           <Button type='submit' className='w-full'>
-            <Loader2 className='w-4 h-4 mr-2 animate-spin' />
+           Please wait... <Loader2 className='w-4 h-4 mr-2 animate-spin' />
           </Button>
         ) : (
-          <Button type='submit' className='w-full'>
+          <Button type='submit' className='w-full text-black bg-white'>
             Sign Up
           </Button>
         )}
