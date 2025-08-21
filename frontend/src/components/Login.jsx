@@ -30,7 +30,6 @@ const Login = () => {
       [name]: value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -49,6 +48,8 @@ const Login = () => {
       );
       if (response.data.success) {
         dispatch(setAuthUser(response.data.user));
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+
         navigate('/');
         toast.success(response.data.message);
         setFormData({
@@ -104,20 +105,23 @@ const Login = () => {
           />
         </div>
         {loading ? (
-          <Button type='submit' className='w-full'>
+          <Button type='submit' className='w-full hover:bg-gray-400'>
             Please wait...
             <Loader2 className='w-4 h-4 mr-2 animate-spin' />
           </Button>
         ) : (
-          <Button type='submit' className='w-full text-black bg-white '>
-           Login
+          <Button
+            type='submit'
+            className='w-full text-lg font-bold text-black bg-white hover:bg-gray-400 hover:text-white '
+          >
+            Login
           </Button>
         )}
-       
+
         <p className='mt-3 text-center'>
           {' '}
           dont have an account?{' '}
-          <Link className='text-blue-700' to='/signup'>
+          <Link className='text-blue-600' to='/signup'>
             Sign up
           </Link>{' '}
         </p>

@@ -232,12 +232,12 @@ const EditProfile = () => {
   };
 
   return (
-    <div className='flex max-w-2xl pl-10 mx-auto'>
+    <div className='flex max-w-2xl px-3 mx-auto text-white md:pl-10 lg:max-w-3xl'>
       <section className='flex flex-col w-full gap-5 my-8'>
         <h1>Edit Profile</h1>
-        <div className='flex items-center justify-between p-4 bg-gray-100 rounded-xl'>
-          <div className='flex items-center gap-4'>
-            <Avatar>
+        <div className='flex max-sm:flex-wrap items-center justify-between p-4 bg-[#070606] rounded-xl'>
+          <div className='flex items-center gap-4 max-sm:flex-wrap'>
+            <Avatar className='w-24 h-24 md:h-30 md:w-30'>
               <AvatarImage
                 src={preview || 'https://github.com/shadcn.png'} // 👈 show live preview
                 className='object-cover w-full h-full rounded-full'
@@ -256,7 +256,7 @@ const EditProfile = () => {
           />
           <Button
             onClick={() => imageRef?.current.click()}
-            className='px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-500'
+            className='px-4 py-2 text-white bg-blue-600 rounded-md max-sm:mt-4 hover:bg-blue-500'
           >
             Change Photo
           </Button>
@@ -271,14 +271,18 @@ const EditProfile = () => {
               setInputData({ ...inputData, bio: e.target.value })
             }
             placeholder='Write something about yourself...'
-            className='focus-visible:ring-transparent'
+            className='text-black focus-visible:ring-transparent '
           />
         </div>
 
         {/* Gender */}
-        <div>
-          <h1 className='mb-2 font-bold'>Gender</h1>
-          <Select onValueChange={selectHandler} defaultValue={inputData.gender}>
+        <div className='text-black'>
+          <h1 className='mb-2 font-bold text-white'>Gender</h1>
+          <Select
+            onValueChange={selectHandler}
+            className='text-black'
+            defaultValue={inputData.gender}
+          >
             <SelectTrigger className='w-full'>
               <SelectValue />
             </SelectTrigger>
@@ -289,7 +293,7 @@ const EditProfile = () => {
           </Select>
         </div>
 
-        <div className='flex justify-end'>
+        <div className='flex justify-end max-sm:mb-16 '>
           {loading ? (
             <Button>
               <Loader2 className='w-4 h-4 mr-2 animate-spin' />

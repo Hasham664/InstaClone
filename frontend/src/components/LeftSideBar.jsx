@@ -73,18 +73,17 @@ const LeftSideBar = () => {
     }
   };
 
-  const apiDebug =  async () => {
-    try {
-      const res = await axios.get(`${BACKENDURL}/debug`, {
-        withCredentials: true,
-      });
-      console.log(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-    // apiDebug(); // Uncomment to test API debug endpoint
-    apiDebug(); // Call API debug endpoint
+  // const apiDebug =  async () => {
+  //   try {
+  //     const res = await axios.get(`${BACKENDURL}/debug`, {
+  //       withCredentials: true,
+  //     });
+  //     console.log(res.data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  // apiDebug(); // Uncomment to test API
 
   const sidebarHandler = (text) => {
     if (text === 'Logout') {
@@ -148,7 +147,7 @@ const LeftSideBar = () => {
   return (
     <div
       className={`
-      overflow-y-auto max-md:flex max-md:items-center max-md:justify-between max-md:w-full max-md:bottom-0 md:block fixed md:top-0 left-0 max-sm:px-2 px-4  md:h-screen border-r border-gray-300 bg-black text-white z-50  
+      overflow-y-auto max-md:flex max-md:items-center max-md:justify-between max-md:w-full max-md:bottom-0 md:block fixed md:top-0 left-0 max-sm:px-2 px-4  md:h-screen border-r border-gray-300 bg-[#070606] text-white z-50  
        ${isCollapsed ? 'max-lg:w-fit  ' : 'lg:w-[16%]'}
     `}
     >
@@ -160,7 +159,9 @@ const LeftSideBar = () => {
       `}
         >
           <FaInstagram className='w-8 h-8 ' />
-          <p className={` hidden  ${isCollapsed ? 'lg:hidden' : 'lg:block'}   `}>
+          <p
+            className={` hidden  ${isCollapsed ? 'lg:hidden' : 'lg:block'}   `}
+          >
             INSTA
           </p>
         </h1>
@@ -172,7 +173,7 @@ const LeftSideBar = () => {
         return (
           <div
             key={ind}
-            className={`relative flex items-center gap-2 py-2 sm:p-1 sm:py-4 rounded-md cursor-pointer hover:bg-white hover:text-black 
+            className={`relative flex items-center gap-2 py-2 sm:p-1 sm:py-4 rounded-md cursor-pointer hover:bg-gray-900 transition-all duration-300 ease-in-out 
         ${
           item.text === 'Search' || item.text === 'Explore'
             ? 'max-md:hidden'
@@ -188,10 +189,7 @@ const LeftSideBar = () => {
               //  if (isMessages) setIsCollapsed(true); // collapse on Messages
             }}
           >
-            <p className='text-xs'>
-              
-            {item.icon}
-            </p>
+            <p className='text-xs'>{item.icon}</p>
             {/* Base: hidden on mobile. On lg: show unless collapsed */}
             <span
               className={`hidden ${isCollapsed ? 'lg:hidden' : 'lg:inline'}`}

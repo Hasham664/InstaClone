@@ -14,6 +14,7 @@ import { setOnlineUsers } from "./redux/chatSlice"
 import { setLikeNotification } from "./redux/rtnSlice"
 import axios from "axios"
 import ProtectedRoute from "./components/ProtectedRoute"
+import { setAuthUser } from "./redux/authSlice"
 // import { connectSocket, disconnectSocket } from "./socketIo/socketService"
 const router = createBrowserRouter([
   {
@@ -53,6 +54,12 @@ function App() {
   // const {socket} = useSelector((state) => state.socketio);
   const dispatch = useDispatch();
   
+useEffect(() => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    dispatch(setAuthUser(JSON.parse(storedUser)));
+  }
+}, [dispatch]);
 
 useEffect(() => {
   if (user) {

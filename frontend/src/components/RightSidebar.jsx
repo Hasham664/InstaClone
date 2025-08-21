@@ -10,7 +10,7 @@ const RightSidebar = () => {
   
   
   return (
-    <div className='py-10 text-white bg-black lg:pr-32 md:pr-16 max-md:pr-8 max-sm:hidden w-fit '>
+    <div className='py-10 text-white bg-[#070606] lg:pr-32 md:pr-16 max-md:pr-8 max-sm:hidden w-fit '>
       <div className='flex items-center gap-2'>
         <Link to={`/profile/${user?._id}`}>
           <Avatar>

@@ -76,20 +76,20 @@ export const login = async (req, res) => {
       following: user.following,
     };
 
-    return res
-      .cookie('token', token, {
-        httpOnly: true,
-        sameSite: 'None', // instead of 'strict'
-        secure: true, // Set to true if using HTTPS
-        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
-      })
     // return res
     //   .cookie('token', token, {
     //     httpOnly: true,
-    //     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'lax',
-    //     secure: process.env.NODE_ENV === 'production',
-    //     maxAge: 24 * 60 * 60 * 1000,
+    //     sameSite: 'None', // instead of 'strict'
+    //     secure: true, // Set to true if using HTTPS
+    //     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     //   })
+    return res
+      .cookie('token', token, {
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000,
+      })
       .status(200)
       .json({
         message: `Welcome back ${user.username}`,
